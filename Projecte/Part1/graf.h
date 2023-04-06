@@ -7,7 +7,7 @@ using namespace std;
 struct Node {
     int id;
     bool valid;
-    vector<pair<int, bool>> adjacents;
+    vector<pair<int, bool> > adjacents;
 };
 
 
