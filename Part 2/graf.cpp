@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <string>
 #include <vector>
 #include "graf.h"
 using namespace std;
@@ -12,33 +14,39 @@ Graf::Graf(vector<Node> nodesEnt){
 }
 //Constructora buida (per introduir el graf, no permetrem graf buit)
 Graf::Graf(){
-    int n;
-    cout << "Introdueix el nº de vèrtexs del graf:" << endl;
-    cin >> n;
-    vector<Node> nodesEntrada(n);
-    for (int i = 0; i < n; ++i){
-        cout << "Quantes arestes té el node " << i << "?" << endl;
-        int m;
-        cin >> m;
-        Node N;
-        N.id = i;
-        N.valid = true;
-        if (m > 0) cout << "Amb quins nodes és adjacent el node " << i << "?" << endl;
-        vector<pair<int, bool>> adj(m);
-        for (int j = 0; j < m; ++j){
-            cout << j+1 << "/" << m << ": ";
-            pair<int, bool> introduir;
-            int a;
-            cin >> a;
-            introduir.first = a;
-            introduir.second = true;
-            adj[j] = introduir;
-        }
-        N.adjacents = adj;
-        nodesEntrada[i] = N;
+    int n, m;
+    string s;
+    string nom = "prove";
+    ifstream fitxer(nom.c_str());
+    getline(fitxer, s);
+    if (s.substr(0, 6) == "p edge") {
+        string s1 = s.substr(7);
+        int espai = s1.find(' ');
+        string num1 = s1.substr(0, espai);
+        string num2 = s1.substr(espai+1);
+        n = stoi(num1);
+        m = stoi(num2);
     }
+    nombrenodes = n;
+    vector<Node> nodesEntrada(n);
     nodes = nodesEntrada;
-    nombrenodes = nodesEntrada.size();
+    for (int i = 0; i < m; ++i) {
+        //cout << "Quantes arestes té el node " << i << "?" << endl;
+        int a, b;
+        getline(fitxer, s);
+        string s1 = s.substr(2);
+        int espai = s1.find(' ');
+        string num1 = s1.substr(0, espai);
+        string num2 = s1.substr(espai+1);
+        a = stoi(num1);
+        b = stoi(num2);
+        nodes[a-1].id = a-1;
+        nodes[a-1].valid = true;
+        nodes[a-1].adjacents.push_back(make_pair(b-1, true));
+        nodes[b-1].id = b-1;
+        nodes[b-1].valid = true;
+        nodes[b-1].adjacents.push_back(make_pair(a-1, true));
+    }
 }
 
 void Graf::afegirNode(Node n){

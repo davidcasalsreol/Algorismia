@@ -35,11 +35,11 @@ int difusioLT(Graf G, double r, set<int> &Activats){
             vector<int> adj = G.nodesadjacents(node);
             for(int i = 0; i < adj.size(); ++i){
                 int g  = G.grauNode(adj[i]);
-                if(ActTot.find(adj[i]) == ActTot.end()) {   
+                if(ActTot.find(adj[i]) == ActTot.end()) {  
                     cout << adj[i] << " amb grau "<< g<<", tenim " << InfluenciaNodes[adj[i]]  << " i necessitem " <<r*g << endl;
                     InfluenciaNodes[adj[i]]++;
-                    if(InfluenciaNodes[adj[i]] > r*g){
-                        cout << adj[i] << " ha superat el seu llindar " << r*g << endl;
+                    if(InfluenciaNodes[adj[i]] > r*g) {
+                        cout << adj[i] << " ha superat el seu llindar " << r*g << endl; 
                         Activats.insert(adj[i]);
                         ActTot.insert(adj[i]);
                     }
@@ -91,6 +91,7 @@ void recombinar(set<Individu, decltype(&ordre)> poblacio) {
     Individu pare = *it;
     Individu mare = *it2;
     Individu fill;
+    fill.nodes = vector<bool> (pare.nodes.size());
     int tamGraf = pare.nodes.size();
     int punt = rand() % tamGraf;
     for (int i = 0; i < punt; ++i) {
@@ -104,22 +105,20 @@ void recombinar(set<Individu, decltype(&ordre)> poblacio) {
 
 
 int main(){
+    double r;
+    cin >> r;
     Graf G;
     cout << "TEST: NOMBRENODES " << G.nNodes() << endl;
     set<Individu, decltype(&ordre)> Poblacio(&ordre);
-    double r;
-    cout << "Quina és la r: ";
-    cin >> r;
-    cout << endl;
     if ( (r > 0.0 or r == 0.0) and (r < 1.0 or r == 1.0)) {
-        generarPoblacioInicial(Poblacio, G, 0.1);
-        for(int i = 0; i < 50 and (Poblacio.size() > 1); i++) { // 50 it. arbitraries
+        generarPoblacioInicial(Poblacio, G, r);
+        for(int i = 0; i < 50 and (Poblacio.size() > 1); ++i) { // 50 it. arbitraries
             set<Individu, decltype(&ordre)> s(&ordre);
-            for(int j = 0; j < 2; j++) {
+            for(int j = 0; j < 2; ++j) {
                 auto it = Poblacio.begin();
                 Individu ind = *it;
                 Poblacio.erase(it);
-                calcularFitness(ind, G, 0.1);
+                calcularFitness(ind, G, r);
                 s.insert(ind);
             }
             recombinar(s);
@@ -128,6 +127,7 @@ int main(){
         }
         auto it = Poblacio.begin();
         cout << "Número de nodes activats inicialment " << numActivats((*it).nodes) << endl;
+        cout << "Fitness: " << (*it).fitness << endl;
     }
     else cout << "r incorrecta" << endl;
 }
