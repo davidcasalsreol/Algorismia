@@ -18,6 +18,7 @@ class Graf{
     public:
         Graf(vector<Node> nodesEnt);
         Graf();
+        void llegirGraf();
         void afegirNode(Node n);
         void eliminarNode(int id);
         int nNodes();

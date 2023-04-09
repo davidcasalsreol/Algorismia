@@ -37,7 +37,7 @@ queue<int> difusioLT(Graf G, double r, set<int> &Activats){
     return rta;
 }
 
-int main(){
+/*int main(){
     Graf G;
     Node N;
     cout << "TEST: NOMBRENODES " << G.nNodes() << endl;
@@ -68,3 +68,4 @@ int main(){
     }
     cout << endl;
 }
+*/

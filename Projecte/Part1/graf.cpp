@@ -3,15 +3,19 @@
 #include "graf.h"
 using namespace std;
 
-vector<Node> nodes;
- int nombrenodes;
+//vector<Node> nodes;
+//int nombrenodes;
 //Constructora amb paràmetre.
 Graf::Graf(vector<Node> nodesEnt){
     nodes = nodesEnt;
     nombrenodes = nodesEnt.size();
 }
-//Constructora buida (per introduir el graf, no permetrem graf buit)
+
 Graf::Graf(){
+}
+
+//Constructora buida (per introduir el graf, no permetrem graf buit)
+void Graf::llegirGraf(){
     int n;
     cout << "Introdueix el nº de vèrtexs del graf:" << endl;
     cin >> n;
@@ -24,7 +28,7 @@ Graf::Graf(){
         N.id = i;
         N.valid = true;
         if (m > 0) cout << "Amb quins nodes és adjacent el node " << i << "?" << endl;
-        vector<pair<int, bool>> adj(m);
+        vector<pair<int, bool> > adj(m);
         for (int j = 0; j < m; ++j){
             cout << j+1 << "/" << m << ": ";
             pair<int, bool> introduir;
@@ -72,7 +76,7 @@ int Graf::nNodes(){
 vector<int> Graf::nodesadjacents(int nodeID){
     vector<int> ret;
     if (nodeID > nodes.size()) return ret;
-    vector<pair<int, bool>> n = nodes[nodeID].adjacents;
+    vector<pair<int, bool> > n = nodes[nodeID].adjacents;
     for (int i = 0; i < n.size(); ++i){
         if(n[i].second) ret.push_back(n[i].first);
     }

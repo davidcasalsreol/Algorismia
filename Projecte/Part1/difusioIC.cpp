@@ -6,7 +6,15 @@
 #include <unordered_set>
 using namespace std;
 
-queue<int> difusioIC(Graf G, double p, set<int> &Activats){
+pair<queue<int>, int> difusioIC(Graf G, double p, set<int> Activats){
+    cout << "Activats: ";
+    set<int>::iterator it;
+    for(it = Activats.begin(); it != Activats.end(); it++)
+    {
+        cout << *it << " ";
+    }
+    cout << endl;
+
     set<int> ActTot = Activats; //Aquesta implementació visita els vertex activats ordenats creixentment per id de node
     //unordered_set<int> ActTot = Activitats ho per FIFO
     //queue<int> ActTot = Activat5s ho fa per FIFO pero no tenim la opcio de cridar a .find() com si ho podem fer a les altres
@@ -14,18 +22,13 @@ queue<int> difusioIC(Graf G, double p, set<int> &Activats){
     while(Activats.size() > 0 and ActTot.size() < G.nNodes()){
         auto it = Activats.begin();
         rta.push(*it);
-        cout << "analitzemmm " << *it << endl;
         int node = *it ;
         Activats.erase(it);
         vector<int> adj = G.nodesadjacents(node);
         for(int i = 0; i < adj.size(); ++i){
-            cout << adj[i] << endl;
-            cout <<"posicio de activada " << *ActTot.find(adj[i]) << " sobre " << *ActTot.end() << endl;
             if(ActTot.find(adj[i]) == ActTot.end()) {
                 double r = (double)rand()/ (double)RAND_MAX;
-                cout << "amb probabilitat de " << r << endl;
                 if(r < p){
-                    cout << "activo " << adj[i]<< endl;
                     Activats.insert(adj[i]);
                     ActTot.insert(adj[i]);
                     
@@ -34,11 +37,12 @@ queue<int> difusioIC(Graf G, double p, set<int> &Activats){
         }
         
     }
-    return rta;
+    cout << "NODOS ACTIVADOS: " << ActTot.size() << endl;
+    return pair<queue<int>, int> (rta, ActTot.size());
 }
 
 
-int main(){
+/*int main(){
     Graf G;
     Node N;
     cout << "TEST: NOMBRENODES " << G.nNodes() << endl;
@@ -68,3 +72,4 @@ int main(){
     }
     cout << endl;
 }
+*/

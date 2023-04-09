@@ -13,17 +13,24 @@ class State
         set<int> nodes;
         bool addNode(int n, State& newState);
         bool removeNode(int n, State& newState);
+        bool isSolutionIC();
+        bool isSolutionLT();
 
     public:
         State();
         State(Graf g, set<int> nodes);
         //Returns succesors that ARE Solutions
-        void getSuccessors(vector<State>& successors);
+        void getSuccessorsIC(vector<State>& successors);
+        void getSuccessorsLT(vector<State>& successors);
         
         //Returns the quality of the state
         int eval();
 
-        bool isSolution();
+        set<int> getNodes();
+
+        void generateFullSolution(Graf g);
+
+        void printNodes();
 };
 
 
