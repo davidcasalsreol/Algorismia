@@ -6,30 +6,25 @@
 #include <unordered_set>
 using namespace std;
 
+set<int> ActTotLT;
 
-queue<int> difusioLT(Graf G, double r, set<int> &Activats){
-    set<int> ActTot = Activats;
+queue<int> difusioLT(Graf G, double r, set<int> Activats){
+    ActTotLT = Activats;
     queue<int> rta;
     vector<int> InfluenciaNodes(G.nNodes(), 0);
-    while(Activats.size() > 0 and ActTot.size() < G.nNodes()){
+    while(Activats.size() > 0 and ActTotLT.size() < G.nNodes()){
         auto it = Activats.begin();
         rta.push(*it);
-        cout << "analitzemmm " << *it << endl;
         int node = *it ;
         Activats.erase(it);        
-        if(G.esValid(node)){
-            cout << "valid" << endl;
-            vector<int> adj = G.nodesadjacents(node);
-            for(int i = 0; i < adj.size(); ++i){
-                int g  = G.grauNode(adj[i]);
-                if(ActTot.find(adj[i]) == ActTot.end()) {   
-                    cout << adj[i] << " amb grau "<< g<<", tenim " << InfluenciaNodes[adj[i]]  << " i necessitem " <<r*g << endl;
-                    InfluenciaNodes[adj[i]]++;
-                    if(InfluenciaNodes[adj[i]] > r*g){
-                        cout << adj[i] << " ha superat el seu llindar " << r*g << endl;
-                        Activats.insert(adj[i]);
-                        ActTot.insert(adj[i]);
-                    }
+        vector<int> adj = G.nodesadjacents(node);
+        for(int i = 0; i < adj.size(); ++i){
+            int g  = G.grauNode(adj[i]);
+            if(ActTotLT.find(adj[i]) == ActTotLT.end()) {   
+                InfluenciaNodes[adj[i]]++;
+                if(InfluenciaNodes[adj[i]] >= r*g){
+                    Activats.insert(adj[i]);
+                    ActTotLT.insert(adj[i]);
                 }
             }
         }

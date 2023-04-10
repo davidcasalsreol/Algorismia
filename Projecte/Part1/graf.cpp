@@ -16,7 +16,36 @@ Graf::Graf(){
 
 //Constructora buida (per introduir el graf, no permetrem graf buit)
 void Graf::llegirGraf(){
-    int n;
+    
+    //cout << "nombre i titol:" << endl;
+    string nom, s;
+    cin >> nom >> s;
+    //cout << "nombre vertex i arestes:" << endl;
+    int n, m;
+    cin >> n >> m;
+    nombrenodes = n;
+    vector<Node> nodesEntrada(n);
+    for (int i = 0; i < m; ++i) {
+        char c;
+        cin >> c;
+        int u, v;
+        cin >> u >> v;
+
+        pair<int,bool> uu ;
+        pair<int,bool> vv ;
+
+        uu.first = v;
+        uu.second = true;
+        vv.first = u;
+        vv.second = true;
+
+        nodesEntrada[u].adjacents.push_back(uu);
+        nodesEntrada[v].adjacents.push_back(vv);
+    }
+    
+    
+    
+    /*int n;
     cout << "Introdueix el nº de vèrtexs del graf:" << endl;
     cin >> n;
     vector<Node> nodesEntrada(n);
@@ -40,7 +69,7 @@ void Graf::llegirGraf(){
         }
         N.adjacents = adj;
         nodesEntrada[i] = N;
-    }
+    }*/
     nodes = nodesEntrada;
     nombrenodes = nodesEntrada.size();
 }

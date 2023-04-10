@@ -13,8 +13,6 @@ class State
         set<int> nodes;
         bool addNode(int n, State& newState);
         bool removeNode(int n, State& newState);
-        bool isSolutionIC();
-        bool isSolutionLT();
 
     public:
         State();
@@ -29,6 +27,12 @@ class State
         set<int> getNodes();
 
         void generateFullSolution(Graf g);
+        void generateRandomSolution(Graf g);
+        void generateSimpleSolution(Graf g);
+        void generateSequentialSolution(Graf g);
+
+        bool isSolutionIC();
+        bool isSolutionLT();
 
         void printNodes();
 };

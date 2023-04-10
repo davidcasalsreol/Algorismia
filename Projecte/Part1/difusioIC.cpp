@@ -6,16 +6,18 @@
 #include <unordered_set>
 using namespace std;
 
-pair<queue<int>, int> difusioIC(Graf G, double p, set<int> Activats){
-    cout << "Activats: ";
+set<int> ActTot;
+
+queue<int> difusioIC(Graf G, double p, set<int> Activats){
+    /*cout << "Activats: ";
     set<int>::iterator it;
     for(it = Activats.begin(); it != Activats.end(); it++)
     {
         cout << *it << " ";
     }
-    cout << endl;
+    cout << endl;*/
 
-    set<int> ActTot = Activats; //Aquesta implementació visita els vertex activats ordenats creixentment per id de node
+    ActTot = Activats; //Aquesta implementació visita els vertex activats ordenats creixentment per id de node
     //unordered_set<int> ActTot = Activitats ho per FIFO
     //queue<int> ActTot = Activat5s ho fa per FIFO pero no tenim la opcio de cridar a .find() com si ho podem fer a les altres
     queue<int> rta;
@@ -37,8 +39,7 @@ pair<queue<int>, int> difusioIC(Graf G, double p, set<int> Activats){
         }
         
     }
-    cout << "NODOS ACTIVADOS: " << ActTot.size() << endl;
-    return pair<queue<int>, int> (rta, ActTot.size());
+    return rta;
 }
 
 

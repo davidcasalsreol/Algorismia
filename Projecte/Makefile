@@ -1,7 +1,7 @@
 all: programa
 
 programa: graf.o localsearch.o State.o
-	g++ -o programa.out graf.o localsearch.o State.o
+	g++ -O2 -o programa.out graf.o localsearch.o State.o
 
 graf.o: Part1/graf.cpp
 	g++ -c Part1/graf.cpp
