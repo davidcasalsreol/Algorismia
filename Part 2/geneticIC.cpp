@@ -23,6 +23,40 @@ int numActivats(vector<bool> nodes) {
 }
 
 int difusioIC(Graf G, double p, set<int> &Activats){
+    srand(time(0));
+    set<int> ActivatsTotals = Activats; //Aquesta implementació visita els vertex activats ordenats creixentment per id de node
+    //unordered_set<int> ActivatsTotals = Activitats ho per FIFO
+    //queue<int> ActivatsTotals = Activat5s ho fa per FIFO pero no tenim la opcio de cridar a .find() com si ho podem fer a les altres
+    queue<int> rta;
+    while(Activats.size() > 0 and ActivatsTotals.size() < G.nNodes()){
+        auto it = Activats.begin();
+        rta.push(*it);
+        //cout << "analitzemmm " << *it << endl;
+        int node = *it ;
+        Activats.erase(it);
+        vector<int> adj = G.nodesadjacents(node);
+        for(int i = 0; i < adj.size(); ++i){
+            cout << adj[i] << endl;
+          //  cout <<"posicio de activada " << *ActivatsTotals.find(adj[i]) << " sobre " << *ActivatsTotals.end() << endl;
+            if(ActivatsTotals.find(adj[i]) == ActivatsTotals.end()) {
+                double r = (double)rand()/ (double)RAND_MAX;
+            //    cout << "amb probabilitat de " << r << endl;
+              //  cout << r << endl;
+                if(r < p){
+                //    cout << "activo " << adj[i]<< endl;
+                    Activats.insert(adj[i]);
+                    ActivatsTotals.insert(adj[i]);
+                    
+                }
+            }
+        }
+        
+    }
+    return ActivatsTotals.size();
+}
+
+/*
+int difusioIC(Graf G, double p, set<int> &Activats){
     set<int> ActTot = Activats;
     queue<int> rta;
     while(Activats.size() > 0 and ActTot.size() < G.nNodes()){
@@ -45,7 +79,7 @@ int difusioIC(Graf G, double p, set<int> &Activats){
     }
     return ActTot.size();
 }
-
+*/
 
 bool ordre(const Individu& ind1, const Individu& ind2) {
     return (ind1.fitness > ind2.fitness);
