@@ -1,6 +1,4 @@
 #include <iostream>
-#include <fstream>
-#include <string>
 #include <vector>
 #include "graf.h"
 using namespace std;
@@ -16,36 +14,20 @@ Graf::Graf(vector<Node> nodesEnt){
 Graf::Graf(){
     int n, m;
     string s;
-    string nom = "prove";
-    ifstream fitxer(nom.c_str());
-    getline(fitxer, s);
-    if (s.substr(0, 6) == "p edge") {
-        string s1 = s.substr(7);
-        int espai = s1.find(' ');
-        string num1 = s1.substr(0, espai);
-        string num2 = s1.substr(espai+1);
-        n = stoi(num1);
-        m = stoi(num2);
-    }
+    cin >> n >> m;
     nombrenodes = n;
     vector<Node> nodesEntrada(n);
     nodes = nodesEntrada;
     for (int i = 0; i < m; ++i) {
         //cout << "Quantes arestes té el node " << i << "?" << endl;
         int a, b;
-        getline(fitxer, s);
-        string s1 = s.substr(2);
-        int espai = s1.find(' ');
-        string num1 = s1.substr(0, espai);
-        string num2 = s1.substr(espai+1);
-        a = stoi(num1);
-        b = stoi(num2);
-        nodes[a-1].id = a-1;
-        nodes[a-1].valid = true;
-        nodes[a-1].adjacents.push_back(make_pair(b-1, true));
-        nodes[b-1].id = b-1;
-        nodes[b-1].valid = true;
-        nodes[b-1].adjacents.push_back(make_pair(a-1, true));
+        cin >> a >> b;
+        nodes[a].id = a;
+        nodes[a].valid = true;
+        nodes[a].adjacents.push_back(make_pair(b, true));
+        nodes[b].id = b;
+        nodes[b].valid = true;
+        nodes[b].adjacents.push_back(make_pair(a, true));
     }
 }
 
